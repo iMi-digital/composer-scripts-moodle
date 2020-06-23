@@ -1,0 +1,20 @@
+{
+    "name": "imi/composer-scripts-moodle",
+    "type": "library",
+    "require": {
+        "imi/database-helper": "^0.3.1",
+        "symfony/symfony": "*"
+    },
+    "authors": [
+        {
+            "name": "Alexander Menk",
+            "email": "a.menk@imi.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "IMI\\ComposerScriptsMoodle\\": "src"
+        }
+    },
+    "description": "Helper classes for development of Moodle projects, meant to be called by composer scripts"
+}
