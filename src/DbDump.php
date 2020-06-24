@@ -16,8 +16,14 @@ class DbDump
      */
     public static function dumpToMaster()
     {
+        $cwd = getcwd();
+
+        define('CLI_SCRIPT', true);
+
         global $CFG;
-        require_once __DIR__ . '/../../../config.php';
+        require_once __DIR__ . '/../../../../config.php';
+
+        chdir($cwd); // moodle seems to change the directory
 
         $mysql = new Mysql([
             'host' => $CFG->dbhost,
@@ -28,7 +34,7 @@ class DbDump
 
         $dump = new Dump($mysql);
         $dump->setStrip('mdl_log mdl_log_display mdl_log_queries mdl_lock_db ' . getenv('DUMP_STRIP_ADDITIONAL'));
-        $dump->setFilename('sql/master.sql');
+        $dump->setFilename(getenv('DUMP_FILE_NAME') ?? 'sql/master.sql');
         $dump->setAddTime('no');
 
         foreach ($dump->createExec()->getCommands() as $command) {
