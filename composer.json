@@ -2,7 +2,7 @@
     "name": "imi/composer-scripts-moodle",
     "type": "library",
     "require": {
-        "imi/database-helper": "^0.3.1",
+        "imi/database-helper": "^0.3.1"
     },
     "authors": [
         {
