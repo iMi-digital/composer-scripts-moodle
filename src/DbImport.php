@@ -4,25 +4,22 @@ namespace IMI\ComposerScriptsMoodle;
 
 use IMI\DatabaseHelper\Mysql;
 use IMI\DatabaseHelper\Operations\Dump;
+use IMI\DatabaseHelper\Operations\Import;
 use Symfony\Component\Yaml\Yaml;
 
-class DbDump extends AbstractCommand
+class DbImport extends AbstractCommand
 {
 
     /**
      * Read DB parameters and dump database to master, stripping tables
      *
-     * Reads env DUMP_STRIP_ADDITIONAL (string, space separated list) or NONE to not strip anything
+     * Reads env DUMP_STRIP_ADDITIONAL (string, space separated list)
      */
-    public static function dump()
+    public static function import()
     {
-        $dump = new Dump(self::getDatabaseInstance());
-
-        if (getenv('DUMP_STRIP_ADDITIONAL') !== 'NONE') {
-            $dump->setStrip('mdl_log mdl_log_display mdl_log_queries mdl_lock_db ' . getenv('DUMP_STRIP_ADDITIONAL'));
-        }
+        $dump = new Import(self::getDatabaseInstance());
+        $dump->setIsPipeViewerAvailable(true);
         $dump->setFilename(getenv('DUMP_FILE_NAME') ?? 'sql/master.sql');
-        $dump->setAddTime('no');
 
         foreach ($dump->createExec()->getCommands() as $command) {
             echo $command . PHP_EOL;
