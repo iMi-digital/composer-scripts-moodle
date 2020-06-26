@@ -19,7 +19,7 @@ class DbDump extends AbstractCommand
         $dump = new Dump(self::getDatabaseInstance());
 
         if (getenv('DUMP_STRIP_ADDITIONAL') !== 'NONE') {
-            $dump->setStrip('mdl_log mdl_log_display mdl_log_queries mdl_lock_db ' . getenv('DUMP_STRIP_ADDITIONAL'));
+            $dump->setStrip('mdl_log mdl_log_display mdl_log_queries ' . getenv('DUMP_STRIP_ADDITIONAL'));
         }
         $dump->setFilename(getenv('DUMP_FILE_NAME') ?? 'sql/master.sql');
         $dump->setAddTime('no');
